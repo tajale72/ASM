@@ -7,7 +7,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+const servicename = "service : asm "
+
 func (r *Router) GenerateToken(c *gin.Context) {
+	r.logger.Println("Generating the token")
+
+	//Reading the body from the request payload
 	body, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -16,6 +21,7 @@ func (r *Router) GenerateToken(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 
+	//Generating the token
 	token, err := r.controllersvc.GenerateToken(body)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

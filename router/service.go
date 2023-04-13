@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/gin-contrib/cors"
@@ -21,14 +22,16 @@ type Process struct {
 	auth *gin.RouterGroup
 }
 type Router struct {
+	logger        *log.Logger
 	controllersvc controller.ControllerInterface
 }
 
-//Application starts
-//Loads of the router, controller and database services
+// Application starts
+// Loads of the router, controller and database services
 func Start() {
 	log.Println("I have started")
 	var p Process
+	p.r.logger = log.New(os.Stdout, servicename, log.LstdFlags|log.Lshortfile)
 	router := gin.Default()
 	config := cors.DefaultConfig()
 	config.AllowAllOrigins = true
@@ -50,10 +53,10 @@ func Start() {
 
 }
 
-//JWTMiddleware is take all the API requests and validates the jwt token.
+// JWTMiddleware is take all the API requests and validates the jwt token.
 func (p *Process) JWTMiddleware(c *gin.Context) {
-	var token string
-	token = c.Request.Header.Get(Authorization)
+
+	token := c.Request.Header.Get(Authorization)
 
 	if len(token) == 0 {
 		err := errors.New("error from token validation")
@@ -71,14 +74,6 @@ func (p *Process) JWTMiddleware(c *gin.Context) {
 			c.AbortWithStatus(http.StatusUnauthorized)
 		}
 	}
-	// var wg sync.WaitGroup
-	// wg.Add(1)
-	// val := p.Test(token)
-	// var err error
-	// if !val {
-	// 	log.Println(val)
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// }
 
 }
 
