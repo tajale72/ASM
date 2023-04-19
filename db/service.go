@@ -2,6 +2,7 @@ package db
 
 import (
 	"database/sql"
+	"log"
 
 	"go.mongodb.org/mongo-driver/mongo"
 
@@ -10,6 +11,7 @@ import (
 
 type Service struct {
 	Mongoclient *mongo.Client
+	logger      *log.Logger
 	Db          *sql.DB
 	Name        string
 }

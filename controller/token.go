@@ -4,7 +4,6 @@ import (
 	// import the jwt-go library
 	"encoding/json"
 	"errors"
-	"log"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
@@ -34,7 +33,7 @@ func (s *Service) GenerateToken(body []byte) (string, error) {
 	var generatetoken GenerateToken
 	err := json.Unmarshal(body, &generatetoken)
 	if err != nil {
-		log.Println("error unmarshalling the token: " + err.Error())
+		s.logger.Println("error unmarshalling the token: " + err.Error())
 		return "", errors.New("error unmarshalling the token: " + err.Error())
 	}
 	issuedat := time.Now().Unix()
@@ -57,7 +56,7 @@ func (s *Service) GenerateToken(body []byte) (string, error) {
 
 	if err != nil {
 		// If there is an error in creating the JWT return an internal server error
-		log.Println("error unmarshalling the token: " + err.Error())
+		s.logger.Println("error unmarshalling the token: " + err.Error())
 		return "", errors.New("error generating the token using the signekey: " + err.Error())
 	}
 	return tokenString, nil

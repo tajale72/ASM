@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"log"
+
 	_ "github.com/lib/pq"
 	"go.mongodb.org/mongo-driver/mongo"
 
@@ -9,7 +11,8 @@ import (
 )
 
 type Service struct {
-	DB db.DatabaseInterface
+	DB     db.DatabaseInterface
+	logger *log.Logger
 }
 
 type ControllerInterface interface {
