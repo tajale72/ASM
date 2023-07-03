@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-app
+spec:
+  containers:
+    - name: my-app-container
+      image: golang:1.19
+      workingDir: /app
+      ports:
+        - containerPort: 8081
+      command: ["./main"]
+      volumeMounts:
+        - name: app-volume
+          mountPath: /app
+  volumes:
+    - name: app-volume
+      hostPath:
+        path: /Users/romittajale/Documents/go/myapp/ASM

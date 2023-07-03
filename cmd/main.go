@@ -1,7 +1,7 @@
 package main
 
 import (
-	"myapi/router"
+	"github.com/tajale72/asm/router"
 )
 
 func main() {

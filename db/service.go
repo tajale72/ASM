@@ -6,7 +6,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/mongo"
 
-	"myapi/model"
+	"github.com/tajale72/asm/model"
 )
 
 type Service struct {

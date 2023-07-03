@@ -10,13 +10,26 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive" // for BSON ObjectID
 	"go.mongodb.org/mongo-driver/mongo"
 
-	"myapi/model"
+	"github.com/tajale72/asm/model"
 )
 
-//InsertUser inserts data into the test database
+// InsertUser inserts data into the test database
 func (s *Service) InsertAllUsers(users model.User) (*mongo.InsertOneResult, error) {
-
 	collection := s.Mongoclient.Database("test").Collection("consultants")
+
+	hashValue := hash(users)
+
+	// // Check if the hash value exists in the collection
+	// exists, err := hashExists(collection, hashValue)
+	// if err != nil {
+	// 	s.logger.Println(err)
+	// }
+	// if exists {
+	// 	fmt.Printf("Hash value %x exists in the collection\n", hashValue)
+	// 	return nil, err
+	// }
+
+	users.HashData = string(hashValue)
 	res, err := collection.InsertOne(context.Background(), users)
 	if err != nil {
 		return nil, err
@@ -25,7 +38,7 @@ func (s *Service) InsertAllUsers(users model.User) (*mongo.InsertOneResult, erro
 
 }
 
-//InsertUser inserts data into the test database
+// InsertUser inserts data into the test database
 func (s *Service) UpdateUserById(users model.User, id string) (*mongo.UpdateResult, error) {
 
 	collection := s.Mongoclient.Database("test").Collection("consultants")
@@ -45,7 +58,7 @@ func (s *Service) UpdateUserById(users model.User, id string) (*mongo.UpdateResu
 
 }
 
-//InsertUser inserts data into the test database
+// InsertUser inserts data into the test database
 func (s *Service) GetAllUsers() ([]model.GetUser, error) {
 	var users []model.GetUser
 	collection := s.Mongoclient.Database("test").Collection("consultants")
@@ -72,7 +85,7 @@ func (s *Service) GetAllUsers() ([]model.GetUser, error) {
 
 }
 
-//InsertUser inserts data into the test database
+// InsertUser inserts data into the test database
 func (s *Service) GetUserById(id string) (*model.User, error) {
 	var user model.User
 	ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
@@ -88,14 +101,12 @@ func (s *Service) GetUserById(id string) (*model.User, error) {
 	if err != nil {
 		return nil, err
 	}
-	if user.Status == 0 {
-		user.Status = 25
-	}
+
 	return &user, nil
 
 }
 
-//InsertUser inserts data into the test database
+// InsertUser inserts data into the test database
 func (s *Service) DeleteUserById(id string) (*mongo.DeleteResult, error) {
 	collection := s.Mongoclient.Database("test").Collection("consultants")
 

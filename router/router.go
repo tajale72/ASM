@@ -3,11 +3,12 @@ package router
 import (
 	"database/sql"
 	"log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 
-	"myapi/controller"
-	"myapi/db"
+	"github.com/tajale72/asm/controller"
+	"github.com/tajale72/asm/db"
 )
 
 func (r *Router) InitializeServices() *Router {
@@ -33,6 +34,10 @@ func (r *Router) InitEndpoints(auth *gin.RouterGroup) {
 
 func (r *Router) InitTokenEndpoints(router *gin.Engine) {
 	router.GET("/", r.Hello)
+	// Serve your HTML file:
+	router.GET("/form", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "form.html", gin.H{})
+	})
 	router.GET("/login", r.Login)
 	router.POST("/login", r.PostLogin)
 	router.POST("/verifytoken", r.Verify)

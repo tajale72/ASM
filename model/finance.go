@@ -21,6 +21,7 @@ type Finance struct {
 }
 
 type User struct {
+	HashData      string `bson:"hash" json:"hashdata"`
 	FirstName     string `json:"firstname"`
 	LastName      string `json:"lastname"`
 	Placeofbirth  string `json:"placeofbirth"`
@@ -30,7 +31,7 @@ type User struct {
 	Address       string `json:"address"`
 	Email         string `json:"email"`
 	Phone         string `json:"phone"`
-	Status        int    `json:"status"`
+	Status        string `json:"status"`
 	Sex           string `json:"sex"`
 }
 

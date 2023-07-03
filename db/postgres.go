@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"log"
 
-	"myapi/model"
+	"github.com/tajale72/asm/model"
 )
 
 func PostgressClient() (*sql.DB, error) {

@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"gopkg.in/mgo.v2/bson"
 
-	"myapi/model"
+	"github.com/tajale72/asm/model"
 )
 
 func Mongo() (*mongo.Client, error) {
@@ -27,7 +27,7 @@ func Mongo() (*mongo.Client, error) {
 	return client, nil
 }
 
-//InsertUser inserts data into the test database
+// InsertUser inserts data into the test database
 func (s *Service) InserFinancialData(finance model.Finance, total float64) (*mongo.InsertOneResult, error) {
 	todaysdate := time.Now().Format("01-02-2006")
 	finance.Networth = total
@@ -40,7 +40,7 @@ func (s *Service) InserFinancialData(finance model.Finance, total float64) (*mon
 
 }
 
-//InsertUser inserts data into the test database
+// InsertUser inserts data into the test database
 func (s *Service) GetFinancial(id string) (*model.Finance, error) {
 	todaysdate := time.Now().Format("01-02-2006")
 	collection := s.Mongoclient.Database("test").Collection(todaysdate)

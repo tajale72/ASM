@@ -10,7 +10,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
-	"myapi/controller"
+	"github.com/tajale72/asm/controller"
 )
 
 const (

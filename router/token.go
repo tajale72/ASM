@@ -16,15 +16,18 @@ func (r *Router) GenerateToken(c *gin.Context) {
 	body, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 	if len(body) == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Empty request payload"})
+		return
 	}
 
 	//Generating the token
 	token, err := r.controllersvc.GenerateToken(body)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error from generating token": err.Error()})
+		return
 	}
 	c.JSON(http.StatusOK, token)
 }
